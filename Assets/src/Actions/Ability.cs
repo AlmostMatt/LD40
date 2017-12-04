@@ -49,6 +49,11 @@ public class Ability
 		}
 	}
 
+	// when the unit decides to use the ability
+	public void setCurrentCooldown(float currentCooldown) {
+		cd = currentCooldown;
+	}
+
 	// when the ability happens (after the animation)
 	public virtual void onCast(object target) {
 		// override this

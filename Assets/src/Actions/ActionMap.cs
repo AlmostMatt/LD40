@@ -32,9 +32,13 @@ public class ActionMap
 		actions.Add(id, action);
 		action.owner = owner;
 	}
-	
+
 	public void use(int id, object target) {
 		actions[id].use(target);
+	}
+
+	public void setCurrentCooldown(int id, float cooldown) {
+		actions[id].setCurrentCooldown(cooldown);
 	}
 	
 	public bool ready(int id) {

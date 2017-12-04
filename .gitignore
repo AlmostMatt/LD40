@@ -1,3 +1,17 @@
+# folder containing binaries
+bin/
+
+# =============== #
+# Unity generated #
+# =============== #
+[Tt]emp/
+[Oo]bj/
+[Bb]uild
+[Ll]ibrary/
+sysinfo.txt
+
+# ===
+
 # Windows image file caches
 Thumbs.db
 ehthumbs.db

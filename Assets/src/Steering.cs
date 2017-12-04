@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class Steering : Entity
 {
-	public bool canTurn = true;
+	public bool turnAutomatically = true;
 
 	protected float MAXV = 5f;
 	protected float ACCEL = 20f;
@@ -24,7 +24,7 @@ public class Steering : Entity
 	private Vector2 scaled(float n, Vector2 v) {
 		return n * v.normalized;
 	}
-	
+
 	private float angleDiff(float a1, float a2) {
 		float diff = a2 - a1;
 		// (diff + 180 mod 360) - 180
@@ -47,8 +47,17 @@ public class Steering : Entity
 			return 1;
 		}
 	}
+
+	protected float angleToward(Vector2 target) {
+		var diff = target - (Vector2) transform.position;
+		return Mathf.Rad2Deg * Mathf.Atan2(diff.y, diff.x);
+	}
 	
-	public void turnToward(float angle2) {
+	protected void turnToward(Vector2 target) {
+		turnToward(angleToward(target));
+	}
+
+	protected void turnToward(float angle2) {
 		float angle1 = transform.localEulerAngles.z;
 		float diff = angleDiff(angle1, angle2);
 		float rot = TURN_RATE * Time.fixedDeltaTime;
@@ -81,7 +90,7 @@ public class Steering : Entity
 			rb.velocity = MAXV * rb.velocity.normalized;
 		}
 		// Turn toward the current velocity (so that the x axis is forward)
-		if (canTurn && vv > 0.5) {
+		if (turnAutomatically && vv > 0.5) {
 			float angle = Mathf.Rad2Deg * Mathf.Atan2(rb.velocity.y, rb.velocity.x);
 			turnToward(angle);
 		}
@@ -176,8 +185,16 @@ public class Steering : Entity
 	/*
 	 * Steering behaviours
 	 */
+
+	protected void moveInDirection(Vector2 direction) {
+		Vector2 desiredV = direction * MAXV;
+		if (desiredV.magnitude > MAXV) {
+			desiredV = desiredV * MAXV / desiredV.magnitude;
+		}
+		rb.AddForce(ACCEL * (desiredV - rb.velocity));
+	}
 	
-    public void brake() {
+	protected void brake() {
 		Vector2 deltaV = - rb.velocity;
 		float dvmagn = deltaV.magnitude;
 		if (dvmagn > forceRemaining * forceRemaining * dt * dt) {
@@ -189,21 +206,29 @@ public class Steering : Entity
 		}
 	}
 	
-	public void pursue(Vector2 otherPos, Vector2 otherV) {
+	protected void pursue(Vector2 otherPos, Vector2 otherV) {
 		Vector2 force = pursueForce(otherPos, otherV, forceRemaining);
 		rb.AddForce(force);
 	}
 	
-	public void pursue(MonoBehaviour other) {
-		pursue(other.transform.position, other.GetComponent<Rigidbody2D>().velocity);
+	protected void pursue(GameObject other) {
+		Vector3 otherVelocity = new Vector3();
+		if (other.GetComponent<Rigidbody2D>() != null) {
+			otherVelocity = other.GetComponent<Rigidbody2D>().velocity;
+		}
+		pursue(other.transform.position, otherVelocity);
 	}
 	
-    public void seek(Vector2 dest) {
+	protected void seek(Vector2 dest) {
 		Vector2 force = seekForce(dest, forceRemaining);
 		rb.AddForce(force);
 	}
+
+	protected void seek(GameObject other) {
+		seek(other.transform.position);
+	}
 	
-    public void arrival(Vector2 dest) {
+	protected void arrival(Vector2 dest) {
 		// can approximate with (if too close : break)
 		// alternatively stopdist from current pos and current speed
 		// or expected stopdist after the current frame assuming accel wont change the current frame much
@@ -230,22 +255,31 @@ public class Steering : Entity
 		}
 	}
 
-	public void evade(Vector2 otherPos, Vector2 otherV) {
+	protected void evade(Vector2 otherPos, Vector2 otherV) {
 		Vector2 force = pursueForce(otherPos, otherV, forceRemaining);
 		rb.AddForce(-force);
 	}
 
-	public void evade(MonoBehaviour other) {
+	protected void evade(GameObject other) {
 		evade(other.transform.position, other.GetComponent<Rigidbody2D>().velocity);
 	}
+
+	protected void flee(Vector2 otherPos) {
+		Vector2 force = -seekForce(otherPos, forceRemaining);
+		rb.AddForce(force);
+	}
 	
+	protected void flee(GameObject other) {
+		flee(other.transform.position);
+	}
+
 	// avoid individual static objects
-    public void avoid(List<Vector2> obstacles) {
+	protected void avoid(List<Vector2> obstacles) {
 		
 	}
 
 	// avoid edges of the pathable areas (large walls)
-    public void containment(List<Rect> walls) {
+	protected void containment(List<Rect> walls) {
 		
 	}
 }

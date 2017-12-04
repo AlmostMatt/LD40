@@ -9,7 +9,7 @@ public class Entity : MonoBehaviour
 	// and the object will be destroyed once it reaches 0.
 	public float lifetime = 0f;
 
-	protected void Update () {
+	public void Update () {
 		//worldwrap();
 		if (lifetime > 0f) {
 			lifetime -= Time.deltaTime;

@@ -48,11 +48,18 @@
   <ItemGroup>
      <Compile Include="Assets\src\Actions\Ability.cs" />
      <Compile Include="Assets\src\Actions\ActionMap.cs" />
+     <Compile Include="Assets\src\AudioPlayer.cs" />
+     <Compile Include="Assets\src\CameraLogic.cs" />
      <Compile Include="Assets\src\Enemy.cs" />
+     <Compile Include="Assets\src\EnemySpawn.cs" />
      <Compile Include="Assets\src\Entity.cs" />
+     <Compile Include="Assets\src\MenuScreen.cs" />
+     <Compile Include="Assets\src\Planet.cs" />
      <Compile Include="Assets\src\Player.cs" />
      <Compile Include="Assets\src\Projectile.cs" />
+     <Compile Include="Assets\src\Scene.cs" />
      <Compile Include="Assets\src\Steering.cs" />
+     <Compile Include="Assets\src\Weapon.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

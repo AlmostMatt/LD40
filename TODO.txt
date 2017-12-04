@@ -1,0 +1,64 @@
+
+---------------------- Required / Mechanics ----------------------
+
+
+Can implement pause between waves by adding a delay to all spawns in the spawning code.
+
+
+
+
+WEAPON VARIETY
+  short-range projectile (missile, auto-explodes)
+    could be used for side and reverse guns.
+  curving projectiles (angled initially but curve over time)
+    (curve inward, outward, etc)
+  lasers (instant, straight line, width may increase, visible for a duration and can be rotated)
+    solid colored trail-renderer for the laser
+  cluster missiles
+    fire as a burst on a longer cooldown.
+    semi-randomized path 
+      spiraling, change clockwise or counterclockwise periodically
+      turn rate and time before direction change are randomized
+each attack can have a separate cooldown (but they all fire at once if you wait)
+some level-ups will 'remove' weapons (to change the pattern)
+too many bullets just gets boring, so at some point I want to switch to a smaller number of 'less controlled' weapons
+
+
+
+ENEMY
+art (look like an alien with eyes and wings or some such)
+
+
+LEVEL UP BETWEEN WAVES (but not after the first 2 waves)
+
+---------------------- Optional / Polish ----------------------
+
+
+add noise to missile movements.
+
+
+UI OFFET
+might be wrong for some aspect ratios
+
+
+
+add off-screen indicators for the planets if the player goes too far away
+
+
+Transition animations for health bars (a 'recently changed' bar is red or white and shrinks over time)
+
+
+have enemies move indirectly (spiral inwards or move in formation like space invaders: only move forward occasionally).
+
+
+MOVEMENT EFFECTS
+particle tail for enemy movements 
+
+
+MULTIPLE SHIP MODELS
+for later levels
+
+
+parallax of stars (move at different speeds)
+
+
