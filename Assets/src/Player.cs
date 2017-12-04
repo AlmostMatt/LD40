@@ -34,16 +34,14 @@ public class Player : Steering, Actor {
 		base.Start();
 		updateWeapons(level);
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		// X is forward, and Y is left.
+
+	void FixedUpdate () {
 		moveInDirection(new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")));
 		// 
 		bool playedAttackSound = false;
 		for (int i = delayedAttacks.Count - 1; i>= 0; i--) {
 			var delayedAttack = delayedAttacks[i];
-			delayedAttack.delay -= Time.deltaTime;
+			delayedAttack.delay -= Time.fixedDeltaTime;
 			var playerAngle = transform.localEulerAngles.z;
 			if (delayedAttack.delay <= 0f) {
 				if (!playedAttackSound) {
@@ -61,8 +59,8 @@ public class Player : Steering, Actor {
 			attack(mouse);
 		}
 		// Misc updates
-		actionMap.update(Time.deltaTime);
-		base.Update();
+		actionMap.update(Time.fixedDeltaTime);
+		base.FixedUpdate();
 		//receiveExperience(0.2f * Time.deltaTime);
 
 	}

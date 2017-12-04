@@ -1,4 +1,14 @@
 
+INVESTIGATE FPS/QUALITY BUG
+
+For me, on fast/fastest settings I get 1000+ fps, and the player bugs out and goes off at warp-speed. I assume that I reference deltaTime in FixedUpdate somewehere.
+
+For someone else it happens at all quality settings.
+
+
+ALSO:
+WebGL ???
+
 ---------------------- Required / Mechanics ----------------------
 
 

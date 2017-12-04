@@ -23,7 +23,7 @@ public class Enemy : Steering, Actor {
 		actionMap.add(ATTACK, new Ability(1.6f));
 	}
 
-	public void Update () {
+	public void FixedUpdate () {
 		//var rb = GetComponent<Rigidbody2D>();
 		//rb.velocity = transform.up * MAXV;
 		if (target != null) {
@@ -51,8 +51,8 @@ public class Enemy : Steering, Actor {
 				seek(target);
 			}
 		}
-		actionMap.update(Time.deltaTime);
-		base.Update();
+		actionMap.update(Time.fixedDeltaTime);
+		base.FixedUpdate();
 	}
 
 	public void damage(int amount) {
